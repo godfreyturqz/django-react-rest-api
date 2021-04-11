@@ -6,7 +6,7 @@ const EditBtn = (props) => {
 
     return (
         <div>
-            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#`+ MODAL_ID}>
+            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={'#' + MODAL_ID}>
                 Edit
             </button>
             <Modal modalId={MODAL_ID} {...props}/>

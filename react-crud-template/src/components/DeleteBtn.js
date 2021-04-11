@@ -6,22 +6,21 @@ const DeleteBtn = (props) => {
 
     const handleDelete = (id) => {
         try {
-            const fetchData = () => {
+            const deleteData = () => {
                 api('DELETE', id)
                 .then(() => window.location.assign('/'))
                 .catch(error => console.log(error))
             }
-            fetchData()
+            deleteData()
         } catch (error) {
             console.log(error)
         }
     }
     
     return(
-        <button 
-            className='btn btn-danger'
-            onClick={() => handleDelete(props.id)}
-        >{BTN_NAME}</button>
+        <button className='btn btn-danger' onClick={() => handleDelete(props.id)}>
+            {BTN_NAME}
+        </button>
     )
 }
 

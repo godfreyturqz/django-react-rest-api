@@ -10,7 +10,7 @@ export const api = (httpReqMethod, id = '', objectData = {}) => {
         data: objectData
     }
 
-    const result = axios(config)
+    const response = axios(config)
 
-    return result
+    return response
 }

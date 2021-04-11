@@ -8,8 +8,7 @@ const Modal = (props) => {
 
     const handleFormSubmit = (id) => {
         try {
-            api('PATCH', id, formData)
-            .then(() => setFormData(initialState))
+            api('PUT', id + '/', formData)
             .then(() => window.location.assign('/'))
             .catch(error => console.log(error))
         } catch (error) {
@@ -26,10 +25,10 @@ const Modal = (props) => {
 
     return (
         <ModalComponent
-            modalId={props.modalId}
+            id={props.id}
             handleFormSubmit={handleFormSubmit}
+            modalId={props.modalId}
         >
-            {JSON.stringify(formData)}
             <div className="form-group">
                 <label htmlFor="input1">Name</label>
                 <input type="text" className="form-control" id="input1" onChange={handleInputChange} name="name" value={formData.name ? formData.name : ''} autoComplete="off"/>
@@ -44,13 +43,14 @@ const Modal = (props) => {
 
 const ModalComponent = (props) => {
 
+    const id = props.id
+    const handleFormSubmit = props.handleFormSubmit
     const MODAL_ID = props.modalId
+
     const MODAL_TITLE = 'Edit'
     const BTN_NAME_1 = 'Close'
     const BTN_NAME_2 = 'Save changes'
-
-    const handleFormSubmit = props.handleFormSubmit
-
+    
     return (
         <div className="modal fade" id={MODAL_ID} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
@@ -64,7 +64,7 @@ const ModalComponent = (props) => {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">{BTN_NAME_1}</button>
-                        <button type="button" className="btn btn-primary" onClick={() => handleFormSubmit(props.id)}>{BTN_NAME_2}</button>
+                        <button type="button" className="btn btn-primary" onClick={() => handleFormSubmit(id)}>{BTN_NAME_2}</button>
                     </div>
                 </div>
             </div>
