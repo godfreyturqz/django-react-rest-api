@@ -1,50 +1,38 @@
-import { useState } from 'react'
-import { api } from '../services/api'
+import Input from './Element/Input'
+import useForm from '../utils/useForm'
 
 const Modal = (props) => {
 
     const initialState = props
-    const [formData, setFormData] = useState(initialState)
+    const { formData, handleInputChange, handleUpdate } = useForm(initialState)
 
-    const handleFormSubmit = (id) => {
-        try {
-            api('PUT', id + '/', formData)
-            .then(() => window.location.assign('/'))
-            .catch(error => console.log(error))
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const handleInputChange = (e) => {
-        setFormData({
-        ...formData,
-        [e.target.name]: e.target.value
-        })
-    }
+    const FORM_INPUT_ELEMENTS = [
+        { label: 'Name', id: 'name', name: 'name' },
+        { label: 'Contact', id: 'contact', name: 'contact' }
+    ]
 
     return (
-        <ModalComponent
+        <ModalParent
             id={props.id}
-            handleFormSubmit={handleFormSubmit}
+            handleUpdate={handleUpdate}
             modalId={props.modalId}
         >
-            <div className="form-group">
-                <label htmlFor="input1">Name</label>
-                <input type="text" className="form-control" id="input1" onChange={handleInputChange} name="name" value={formData.name ? formData.name : ''} autoComplete="off"/>
-            </div>
-            <div className="form-group">
-                <label htmlFor="input2">Contact</label>
-                <input type="text" className="form-control" id="input2" onChange={handleInputChange} name="contact" value={formData.contact ? formData.contact : ''} autoComplete="off"/>
-            </div>
-        </ModalComponent>
+            { FORM_INPUT_ELEMENTS.map(attribute =>
+                <Input
+                    key={attribute.id}
+                    handleInputChange={handleInputChange}
+                    value={formData[attribute.name] ? formData[attribute.name] : ''}
+                    {...attribute}
+                />
+            )}
+        </ModalParent>
     )
 }
 
-const ModalComponent = (props) => {
+const ModalParent = (props) => {
 
     const id = props.id
-    const handleFormSubmit = props.handleFormSubmit
+    const handleUpdate = props.handleUpdate
     const MODAL_ID = props.modalId
 
     const MODAL_TITLE = 'Edit'
@@ -64,13 +52,12 @@ const ModalComponent = (props) => {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">{BTN_NAME_1}</button>
-                        <button type="button" className="btn btn-primary" onClick={() => handleFormSubmit(id)}>{BTN_NAME_2}</button>
+                        <button type="button" className="btn btn-primary" onClick={() => handleUpdate(id)}>{BTN_NAME_2}</button>
                     </div>
                 </div>
             </div>
         </div>
     )
 }
-
 
 export default Modal

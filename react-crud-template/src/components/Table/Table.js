@@ -24,7 +24,7 @@ const Table = () => {
         <table className="table">
             <thead>
                 <tr>
-                    { COLUMN_NAMES.map( i => <th key={i.title} scope="col">{i.title}</th> )}
+                    { COLUMN_NAMES.map( item => <th key={item.title} scope="col">{item.title}</th> )}
                 </tr>
             </thead>
             <tbody>
