@@ -8,9 +8,14 @@ const Form = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault()
-        api('POST', '', formData)
-        .then(() => setFormData(initialState))
-        .then(() => window.location.assign('/'))
+        try {
+            api('POST', '', formData)
+            .then(() => setFormData(initialState))
+            .then(() => window.location.assign('/'))
+            .catch(error => console.log(error))
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const handleInputChange = (e) => {
@@ -31,7 +36,7 @@ const Form = () => {
                 <label htmlFor="input2">Contact</label>
                 <input type="text" className="form-control" id="input2" onChange={handleInputChange} name="contact" value={formData.contact ? formData.contact : ''} autoComplete="off"/>
             </div>
-   
+            <br/>
             <button className="btn btn-primary">Submit</button>
         </form>
     )
