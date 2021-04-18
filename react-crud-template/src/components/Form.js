@@ -1,18 +1,15 @@
 import Input from './Element/Input'
 import useForm from '../utils/useForm'
 
-const Form = () => {
+const Form = (props) => {
 
-    const { formData, handleInputChange, handleFormSubmit } = useForm()
-    
-    const FORM_INPUT_ELEMENTS = [
-        { label: 'Name', id: 'name', name: 'name' },
-        { label: 'Contact', id: 'contact', name: 'contact' }
-    ]
+    const { formData, handleInputChange, handleFormSubmit } = useForm(props)
+
+    const FORM_INPUTLIST = props.inputs
 
     return (
         <form onSubmit={handleFormSubmit}>
-            { FORM_INPUT_ELEMENTS.map(attribute =>
+            { FORM_INPUTLIST && FORM_INPUTLIST.map(attribute =>
                 <Input
                     key={attribute.id}
                     handleInputChange={handleInputChange}
