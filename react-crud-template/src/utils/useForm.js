@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import { api } from '../services/api'
 
-const useForm = (initialState = {}) => {
+const useForm = ({apiPostReq, apiDelReq, apiUpdateReq}, initialState = {}) => {
 
     const [formData, setFormData] = useState(initialState)
 
@@ -15,7 +14,8 @@ const useForm = (initialState = {}) => {
     const handleFormSubmit = (e) => {
         e.preventDefault()
         try {
-            api('POST', '', formData)
+            // api('POST', '', formData)
+            apiPostReq(formData)
             .then(() => setFormData(initialState))
             .then(() => window.location.assign('/'))
             .catch(error => console.log(error))
@@ -26,7 +26,8 @@ const useForm = (initialState = {}) => {
 
     const handleUpdate = (id) => {
         try {
-            api('PUT', id + '/', formData)
+            // api('PUT', id + '/', formData)
+            apiUpdateReq(id, formData)
             .then(() => window.location.assign('/'))
             .catch(error => console.log(error))
         } catch (error) {
@@ -36,7 +37,8 @@ const useForm = (initialState = {}) => {
 
     const handleDelete = (id) => {
         try {
-            api('DELETE', id)
+            // api('DELETE', id)
+            apiDelReq(id)
             .then(() => window.location.assign('/'))
             .catch(error => console.log(error))
         } catch (error) {

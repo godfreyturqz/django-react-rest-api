@@ -6,6 +6,6 @@ export const DB_TABLE_COLUMNS = [
     { title: 'Name', jsonKey: 'name'},
     { title: 'Contact', jsonKey: 'contact'},
     { title: 'Date', jsonKey: 'created_at'},
-    { note: 'Table head space for edit button. Don\'t delete this line.'},
-    { note: 'Table head space for delete button. Don\'t delete this line.'}
+    { title: 'edit', note: 'Table head space for edit button. Don\'t delete this line.'},
+    { title: 'delete', note: 'Table head space for delete button. Don\'t delete this line.'}
 ]

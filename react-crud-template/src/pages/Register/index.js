@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { api } from '../../services/api'
+import { ApiRequest } from '../../services/ApiV2'
 import EditBtn from '../../components/EditBtn'
 import DeleteBtn from '../../components/DeleteBtn'
 // structure
@@ -9,14 +9,17 @@ import Table from '../../components/Table'
 import { DB_TABLE_COLUMNS } from './DB_TABLE_COLUMNS'
 import { FORM_INPUTLIST } from './FORM_INPUTLIST'
 
+
 const Register = () => {
 
     const [fetchedData, setFetchedData] = useState()
 
+    const ApiClass = new ApiRequest()
+
     useEffect(() => {
         try {
             const fetchData = async () => {
-                const result = await api('GET')
+                const result = await ApiClass.register('GET')
                 setFetchedData(result.data)
             }
             fetchData()
@@ -25,9 +28,21 @@ const Register = () => {
         }
     }, [])
 
+    const apiPostReq = (formData) => {
+        return ApiClass.register('POST', '', formData)
+    }
+
+    const apiUpdateReq = (id, formData) => {
+        return ApiClass.register('PUT', id + '/', formData)
+    }
+
+    const apiDelReq = (id) => {
+        return ApiClass.register('DELETE', id)
+    }
+
     return (
         <>
-            <Form inputs={FORM_INPUTLIST} />
+            <Form inputs={FORM_INPUTLIST} apiPostReq={apiPostReq}/>
             <Table columns={DB_TABLE_COLUMNS} >
             {
                 fetchedData && fetchedData.map( res =>
@@ -36,8 +51,8 @@ const Register = () => {
                         <td>{res.name}</td>
                         <td>{res.contact}</td>
                         <td>{res.created_at}</td>
-                        <td><EditBtn {...res}/></td>
-                        <td><DeleteBtn {...res}/></td>
+                        <td><EditBtn {...res} inputs={FORM_INPUTLIST} apiUpdateReq={apiUpdateReq}/></td>
+                        <td><DeleteBtn {...res} apiDelReq={apiDelReq}/></td>
                     </tr>
                 )
             } 
