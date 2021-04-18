@@ -2,10 +2,10 @@ import useForm from '../utils/useForm'
 
 const DeleteBtn = (props) => {
 
-    const { handleDelete } = useForm()
+    const { handleDelete } = useForm(props)
     
     return(
-        <button className='btn btn-danger' onClick={() => handleDelete(props.id)}>
+        <button className='btn btn-danger shadow-none' onClick={() => handleDelete(props.id)}>
             Delete
         </button>
     )

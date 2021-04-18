@@ -18,7 +18,7 @@ const Form = (props) => {
                 />
             )}
             <br/>
-            <button className="btn btn-primary">Submit</button>
+            <button className="btn btn-primary shadow-none">Submit</button>
         </form>
     )
 }

@@ -4,7 +4,7 @@ const Input = (props) => {
             <label htmlFor={props.id}>{props.label}</label>
             <input 
                 type="text" 
-                className="form-control" 
+                className="form-control shadow-none" 
                 autoComplete="off"
                 id={props.id} 
                 name={props.name}

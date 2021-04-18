@@ -4,12 +4,9 @@ import useForm from '../utils/useForm'
 const Modal = (props) => {
 
     const initialState = props
-    const { formData, handleInputChange, handleUpdate } = useForm(initialState)
+    const { formData, handleInputChange, handleUpdate } = useForm(props, initialState)
 
-    const FORM_INPUT_ELEMENTS = [
-        { label: 'Name', id: 'name', name: 'name' },
-        { label: 'Contact', id: 'contact', name: 'contact' }
-    ]
+    const FORM_INPUTLIST = props.inputs
 
     return (
         <ModalParent
@@ -17,7 +14,7 @@ const Modal = (props) => {
             handleUpdate={handleUpdate}
             modalId={props.modalId}
         >
-            { FORM_INPUT_ELEMENTS.map(attribute =>
+            { FORM_INPUTLIST && FORM_INPUTLIST.map(attribute =>
                 <Input
                     key={attribute.id}
                     handleInputChange={handleInputChange}
@@ -51,8 +48,8 @@ const ModalParent = (props) => {
                         {props.children}
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">{BTN_NAME_1}</button>
-                        <button type="button" className="btn btn-primary" onClick={() => handleUpdate(id)}>{BTN_NAME_2}</button>
+                        <button type="button" className="btn btn-secondary shadow-none" data-bs-dismiss="modal">{BTN_NAME_1}</button>
+                        <button type="button" className="btn btn-primary shadow-none" onClick={() => handleUpdate(id)}>{BTN_NAME_2}</button>
                     </div>
                 </div>
             </div>
