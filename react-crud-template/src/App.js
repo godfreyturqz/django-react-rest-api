@@ -1,4 +1,5 @@
 import { lazy, Suspense } from 'react'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 const Register = lazy(() => import('./pages/Register'))
 const Rfi = lazy(() => import('./pages/Rfi'))
 
@@ -10,10 +11,14 @@ function App() {
     <div className="container">
       <h1>CRUD app for testing REST API</h1>
       <br/>
+      <BrowserRouter>
       <Suspense fallback={<Loading/>}>
-        <Register/>
-        <Rfi/>
+        <Switch>
+          <Route path='/register' component={Register}/>
+          <Route path='/rfi' component={Rfi}/>
+        </Switch>
       </Suspense>
+      </BrowserRouter>
     </div>
   )
 }
