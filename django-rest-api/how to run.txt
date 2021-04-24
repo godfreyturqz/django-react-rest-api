@@ -1,0 +1,2 @@
+on the root folder, type:
+pyhton manage.py runserver

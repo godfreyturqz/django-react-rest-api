@@ -20,4 +20,12 @@ export class ApiRequest {
             data: objectData
         })
     }
+
+    contractor(httpReqMethod, id = '', objectData = {}){
+        return axios({
+            url: `${this.API_BASE_URL}/contractor/${id}`,
+            method: httpReqMethod,
+            data: objectData
+        })
+    }
 }
