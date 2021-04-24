@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { ApiRequest } from '../../services/ApiV2'
-import EditBtn from '../../components/EditBtn'
-import DeleteBtn from '../../components/DeleteBtn'
 // structure
 import Form from '../../components/Form'
 import Table from '../../components/Table'
-// dynamic input and data
+// components
+import EditBtn from '../../components/EditBtn'
+import DeleteBtn from '../../components/DeleteBtn'
+// constants
 import { DB_TABLE_COLUMNS } from './DB_TABLE_COLUMNS'
 import { FORM_INPUTLIST } from './FORM_INPUTLIST'
 
@@ -14,32 +15,35 @@ const Rfi = () => {
 
     const [fetchedData, setFetchedData] = useState()
 
-    const ApiClass = new ApiRequest()
+    const ApiClass = useMemo(() => new ApiRequest(), [])
+
+    const apiGetReq = useCallback(() => {
+        return ApiClass.rfi('GET')
+    }, [ApiClass])
+
+    const apiPostReq = useCallback((formData) => {
+        return ApiClass.rfi('POST', '', formData)
+    }, [ApiClass])
+    
+    const apiUpdateReq = useCallback((id, formData) => {
+        return ApiClass.rfi('PUT', id + '/', formData)
+    }, [ApiClass])
+
+    const apiDelReq = useCallback((id) => {
+        return ApiClass.rfi('DELETE', id)
+    }, [ApiClass])
 
     useEffect(() => {
         try {
             const fetchData = async () => {
-                const result = await ApiClass.rfi('GET')
+                const result = await apiGetReq()
                 setFetchedData(result.data)
             }
             fetchData()
         } catch (error) {
             console.log(error)
         }
-    }, [])
-
-    const apiPostReq = (formData) => {
-        return ApiClass.rfi('POST', '', formData)
-    }
-    
-    const apiUpdateReq = (id, formData) => {
-        return ApiClass.rfi('PUT', id + '/', formData)
-    }
-
-    const apiDelReq = (id) => {
-        return ApiClass.rfi('DELETE', id)
-    }
-    
+    }, [apiGetReq, apiPostReq, apiUpdateReq, apiDelReq])
 
     return (
         <>
@@ -51,6 +55,7 @@ const Rfi = () => {
                         <td>{res.id}</td>
                         <td>{res.rfiNumber}</td>
                         <td>{res.discipline}</td>
+                        <td>{res.subject}</td>
                         <td>{res.question}</td>
                         <td>{res.answer}</td>
                         <td>{res.created_at}</td>

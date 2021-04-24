@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { ApiRequest } from '../../services/ApiV2'
-import EditBtn from '../../components/EditBtn'
-import DeleteBtn from '../../components/DeleteBtn'
 // structure
 import Form from '../../components/Form'
 import Table from '../../components/Table'
-// dynamic input and data
+// components
+import EditBtn from '../../components/EditBtn'
+import DeleteBtn from '../../components/DeleteBtn'
+// constants
 import { DB_TABLE_COLUMNS } from './DB_TABLE_COLUMNS'
 import { FORM_INPUTLIST } from './FORM_INPUTLIST'
 
@@ -14,31 +15,35 @@ const Register = () => {
 
     const [fetchedData, setFetchedData] = useState()
 
-    const ApiClass = new ApiRequest()
+    const ApiClass = useMemo(() => new ApiRequest(), [])
+
+    const apiGetReq = useCallback(() => {
+        return ApiClass.register('GET')
+    }, [ApiClass])
+
+    const apiPostReq = useCallback((formData) => {
+        return ApiClass.register('POST', '', formData)
+    }, [ApiClass])
+
+    const apiUpdateReq = useCallback((id, formData) => {
+        return ApiClass.register('PUT', id + '/', formData)
+    }, [ApiClass])
+
+    const apiDelReq = useCallback((id) => {
+        return ApiClass.register('DELETE', id)
+    }, [ApiClass])
 
     useEffect(() => {
         try {
             const fetchData = async () => {
-                const result = await ApiClass.register('GET')
+                const result = await apiGetReq()
                 setFetchedData(result.data)
             }
             fetchData()
         } catch (error) {
             console.log(error)
         }
-    }, [])
-
-    const apiPostReq = (formData) => {
-        return ApiClass.register('POST', '', formData)
-    }
-
-    const apiUpdateReq = (id, formData) => {
-        return ApiClass.register('PUT', id + '/', formData)
-    }
-
-    const apiDelReq = (id) => {
-        return ApiClass.register('DELETE', id)
-    }
+    }, [apiGetReq, apiPostReq, apiUpdateReq, apiDelReq])
 
     return (
         <>
