@@ -49,7 +49,7 @@ const ModalParent = (props) => {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary shadow-none" data-bs-dismiss="modal">{BTN_NAME_1}</button>
-                        <button type="button" className="btn btn-primary shadow-none" onClick={() => handleUpdate(id)}>{BTN_NAME_2}</button>
+                        <button type="button" className="btn btn-primary shadow-none" data-bs-dismiss="modal" onClick={() => handleUpdate(id)}>{BTN_NAME_2}</button>
                     </div>
                 </div>
             </div>
