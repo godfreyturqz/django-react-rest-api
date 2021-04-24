@@ -14,10 +14,8 @@ const useForm = ({apiPostReq, apiDelReq, apiUpdateReq}, initialState = {}) => {
     const handleFormSubmit = (e) => {
         e.preventDefault()
         try {
-            // api('POST', '', formData)
             apiPostReq(formData)
             .then(() => setFormData(initialState))
-            .then(() => window.location.assign('/'))
             .catch(error => console.log(error))
         } catch (error) {
             console.log(error)
@@ -26,9 +24,7 @@ const useForm = ({apiPostReq, apiDelReq, apiUpdateReq}, initialState = {}) => {
 
     const handleUpdate = (id) => {
         try {
-            // api('PUT', id + '/', formData)
             apiUpdateReq(id, formData)
-            .then(() => window.location.assign('/'))
             .catch(error => console.log(error))
         } catch (error) {
             console.log(error)
@@ -37,9 +33,7 @@ const useForm = ({apiPostReq, apiDelReq, apiUpdateReq}, initialState = {}) => {
 
     const handleDelete = (id) => {
         try {
-            // api('DELETE', id)
             apiDelReq(id)
-            .then(() => window.location.assign('/'))
             .catch(error => console.log(error))
         } catch (error) {
             console.log(error)
